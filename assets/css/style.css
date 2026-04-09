@@ -214,11 +214,11 @@ strong { font-weight: 600; color: var(--c-text); }
 .nav-logo {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: -0.01em;
   transition: opacity var(--t-fast);
+  white-space: nowrap;
 }
 .nav-logo:hover { opacity: 0.85; }
 .nav-logo-dot { color: var(--c-purple-lt); }
@@ -914,8 +914,12 @@ strong { font-weight: 600; color: var(--c-text); }
 
 .contact-links {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
+}
+
+.contact-links .contact-card:last-child {
+  grid-column: 1 / -1;
 }
 
 .contact-card {
