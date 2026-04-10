@@ -568,6 +568,12 @@ strong { font-weight: 600; color: var(--c-text); }
   line-height: 1.65;
 }
 
+.about-card-tags {
+  padding-top: 16px;
+  border-top: 1px solid var(--c-border);
+  margin-top: 4px;
+}
+
 .current-role {
   background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(37, 99, 235, 0.08) 100%);
   border: 1px solid rgba(124, 58, 237, 0.2);
