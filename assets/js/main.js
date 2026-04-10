@@ -33,6 +33,20 @@ const FEATURED_REPOS = [
       updatedAt:   null,
     },
   },
+  {
+    owner:   'CyBirdSecurity',
+    repo:    'CISSP',
+    badge:   'Study Tool',
+    liveUrl: 'https://cissp.cybirdsecurity.com',
+    fallback: {
+      name:        'CISSP Study Tool',
+      description: 'Interactive CISSP exam prep with 96 practice questions and 120 flashcards across all 8 exam domains. Built with React/Next.js, featuring real-time feedback, progress tracking, and a dark-themed distraction-free interface.',
+      language:    'TypeScript',
+      stars:       0,
+      forks:       0,
+      updatedAt:   null,
+    },
+  },
 ];
 
 /* Language → dot color mapping */
@@ -205,13 +219,18 @@ function buildCard(config, data) {
 
   const langColor = language ? (LANG_COLORS[language] || '#94a3b8') : null;
   const updated   = relativeDate(updatedAt);
+  const hasLive   = !!config.liveUrl;
 
-  const card = document.createElement('a');
-  card.className   = 'project-card reveal';
-  card.href        = html_url;
-  card.target      = '_blank';
-  card.rel         = 'noopener noreferrer';
-  card.setAttribute('aria-label', `View ${name} on GitHub`);
+  // Cards with a live URL use a <div> so both footer links work independently.
+  // Plain repo cards make the entire card clickable to GitHub.
+  const card = document.createElement(hasLive ? 'div' : 'a');
+  card.className = 'project-card reveal';
+  if (!hasLive) {
+    card.href   = html_url;
+    card.target = '_blank';
+    card.rel    = 'noopener noreferrer';
+    card.setAttribute('aria-label', `View ${name} on GitHub`);
+  }
 
   card.innerHTML = `
     <div class="project-card-top">
@@ -242,7 +261,18 @@ function buildCard(config, data) {
           ${forks}
         </span>
       </div>
-      ${updated ? `<span class="project-updated" aria-label="Updated ${updated}">${updated}</span>` : ''}
+      ${hasLive ? `
+        <div class="project-actions">
+          <a href="${config.liveUrl}" target="_blank" rel="noopener noreferrer" class="project-action-link project-action-link--primary" aria-label="Launch ${name} live tool">
+            Launch Tool
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="${html_url}" target="_blank" rel="noopener noreferrer" class="project-action-link" aria-label="View ${name} source on GitHub">
+            Source
+            ${githubIcon()}
+          </a>
+        </div>
+      ` : updated ? `<span class="project-updated" aria-label="Updated ${updated}">${updated}</span>` : ''}
     </div>
   `;
 
