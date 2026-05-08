@@ -5,7 +5,7 @@
 'use strict';
 
 /* ── Featured repos config ──────────────────────────────────── */
-const FEATURED_REPOS = [
+const SECURITY_REPOS = [
   {
     owner: 'CyBirdSecurity',
     repo:  'Claude-Security-Scanner',
@@ -34,6 +34,22 @@ const FEATURED_REPOS = [
     },
   },
   {
+    owner: 'CyBirdSecurity',
+    repo:  'ActionLoggR',
+    badge: 'CI/CD Security',
+    fallback: {
+      name:        'ActionLoggR',
+      description: 'DNS traffic logger for GitHub Actions workflows. Monitors and logs outbound DNS requests during CI/CD runs to detect unexpected network activity and potential supply chain threats.',
+      language:    'Python',
+      stars:       0,
+      forks:       0,
+      updatedAt:   null,
+    },
+  },
+];
+
+const PERSONAL_REPOS = [
+  {
     owner:   'CyBirdSecurity',
     repo:    'CISSP',
     badge:   'Study Tool',
@@ -42,6 +58,20 @@ const FEATURED_REPOS = [
       name:        'CISSP Study Tool',
       description: 'Interactive CISSP exam prep with 96 practice questions and 120 flashcards across all 8 exam domains. Built with React/Next.js, featuring real-time feedback, progress tracking, and a dark-themed distraction-free interface.',
       language:    'TypeScript',
+      stars:       0,
+      forks:       0,
+      updatedAt:   null,
+    },
+  },
+  {
+    owner:   'CyBirdSecurity',
+    repo:    'SecurityPlus',
+    badge:   'Study Tool',
+    liveUrl: 'https://securityplus.cybirdsecurity.com',
+    fallback: {
+      name:        'SecurityPlus Study Tool',
+      description: 'Interactive CompTIA Security+ exam prep and study guide. Covers all exam domains with practice questions and study materials to help security professionals earn their certification.',
+      language:    'JavaScript',
       stars:       0,
       forks:       0,
       updatedAt:   null,
@@ -280,36 +310,44 @@ function buildCard(config, data) {
 }
 
 /* ── Render projects ────────────────────────────────────────── */
-async function renderProjects() {
-  const grid = document.getElementById('projectsGrid');
+function observeCard(card) {
+  setTimeout(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(card);
+  }, 0);
+}
+
+async function renderRepoGroup(repos, gridId) {
+  const grid = document.getElementById(gridId);
   if (!grid) return;
 
   const results = await Promise.allSettled(
-    FEATURED_REPOS.map(cfg => fetchRepo(cfg.owner, cfg.repo))
+    repos.map(cfg => fetchRepo(cfg.owner, cfg.repo))
   );
 
-  // Clear skeletons
   grid.innerHTML = '';
 
-  FEATURED_REPOS.forEach((cfg, i) => {
+  repos.forEach((cfg, i) => {
     const data = results[i].status === 'fulfilled' ? results[i].value : null;
     const card = buildCard(cfg, data);
     grid.appendChild(card);
-
-    // Trigger reveal observer for dynamically added cards
-    setTimeout(() => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.disconnect();
-          }
-        },
-        { threshold: 0.1 }
-      );
-      observer.observe(card);
-    }, 0);
+    observeCard(card);
   });
+}
+
+async function renderProjects() {
+  await Promise.all([
+    renderRepoGroup(SECURITY_REPOS,  'projectsGrid'),
+    renderRepoGroup(PERSONAL_REPOS,  'personalProjectsGrid'),
+  ]);
 }
 
 renderProjects();
