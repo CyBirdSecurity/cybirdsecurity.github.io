@@ -1,16 +1,15 @@
 /* ─────────────────────────────────────────────────────────────
-   CyBird Security — main.js
+   Drew Klauser — main.js
    ───────────────────────────────────────────────────────────── */
 
 'use strict';
 
-/* ── Featured repos config ──────────────────────────────────── */
+/* ── Featured repos config ──────────────────────────────────────── */
 const SECURITY_REPOS = [
   {
     owner: 'CyBirdSecurity',
     repo:  'Claude-Security-Scanner',
     badge: 'AI-Powered',
-    // fallback data shown while/if API is unavailable
     fallback: {
       name:        'Claude-Security-Scanner',
       description: 'An AI-powered security scanner leveraging Claude to analyze codebases for vulnerabilities, misconfigurations, and security anti-patterns.',
@@ -53,10 +52,9 @@ const PERSONAL_REPOS = [
     owner:   'CyBirdSecurity',
     repo:    'CISSP',
     badge:   'Study Tool',
-    liveUrl: 'https://cissp.cybirdsecurity.com',
     fallback: {
       name:        'CISSP Study Tool',
-      description: 'Interactive CISSP exam prep with 96 practice questions and 120 flashcards across all 8 exam domains. Built with React/Next.js, featuring real-time feedback, progress tracking, and a dark-themed distraction-free interface.',
+      description: 'Interactive CISSP exam prep with 96 practice questions and 120 flashcards across all 8 exam domains. Built with React/Next.js, featuring real-time feedback, progress tracking, and a distraction-free interface.',
       language:    'TypeScript',
       stars:       0,
       forks:       0,
@@ -67,7 +65,6 @@ const PERSONAL_REPOS = [
     owner:   'CyBirdSecurity',
     repo:    'SecurityPlus',
     badge:   'Study Tool',
-    liveUrl: 'https://securityplus.cybirdsecurity.com',
     fallback: {
       name:        'SecurityPlus Study Tool',
       description: 'Interactive CompTIA Security+ exam prep and study guide. Covers all exam domains with practice questions and study materials to help security professionals earn their certification.',
@@ -93,7 +90,7 @@ const LANG_COLORS = {
   C:          '#555555',
 };
 
-/* ── Typing animation ───────────────────────────────────────── */
+/* ── Typing animation ─────────────────────────────────────────────── */
 (function initTyping() {
   const el = document.getElementById('typedWord');
   if (!el) return;
@@ -139,7 +136,7 @@ const LANG_COLORS = {
   setTimeout(tick, 900);
 })();
 
-/* ── Navbar scroll behaviour ────────────────────────────────── */
+/* ── Navbar scroll behaviour ──────────────────────────────────────────── */
 (function initNavbar() {
   const navbar = document.getElementById('navbar');
   if (!navbar) return;
@@ -151,7 +148,7 @@ const LANG_COLORS = {
   onScroll();
 })();
 
-/* ── Mobile nav toggle ──────────────────────────────────────── */
+/* ── Mobile nav toggle ────────────────────────────────────────────────── */
 (function initMobileNav() {
   const toggle = document.getElementById('navToggle');
   const links  = document.getElementById('navLinks');
@@ -162,7 +159,6 @@ const LANG_COLORS = {
     toggle.setAttribute('aria-expanded', String(isOpen));
   });
 
-  // Close on link click
   links.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => {
       links.classList.remove('open');
@@ -171,7 +167,7 @@ const LANG_COLORS = {
   });
 })();
 
-/* ── Scroll-reveal (IntersectionObserver) ───────────────────── */
+/* ── Scroll-reveal (IntersectionObserver) ───────────────────────────────────── */
 (function initReveal() {
   const observer = new IntersectionObserver(
     (entries) => {
@@ -188,13 +184,13 @@ const LANG_COLORS = {
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 })();
 
-/* ── Footer year ────────────────────────────────────────────── */
+/* ── Footer year ───────────────────────────────────────────────────────────── */
 (function setFooterYear() {
   const el = document.getElementById('footerYear');
   if (el) el.textContent = new Date().getFullYear();
 })();
 
-/* ── GitHub API: fetch repo data ────────────────────────────── */
+/* ── GitHub API: fetch repo data ──────────────────────────────────────────── */
 async function fetchRepo(owner, repo) {
   const url = `https://api.github.com/repos/${owner}/${repo}`;
   const res = await fetch(url, {
@@ -204,7 +200,7 @@ async function fetchRepo(owner, repo) {
   return res.json();
 }
 
-/* ── Helpers ────────────────────────────────────────────────── */
+/* ── Helpers ────────────────────────────────────────────────────────────── */
 function relativeDate(isoString) {
   if (!isoString) return null;
   const diff  = Date.now() - new Date(isoString).getTime();
@@ -235,7 +231,7 @@ function githubIcon() {
   </svg>`;
 }
 
-/* ── Build a project card element ───────────────────────────── */
+/* ── Build a project card element ───────────────────────────────────────── */
 function buildCard(config, data) {
   const {
     name        = config.fallback.name,
@@ -251,8 +247,6 @@ function buildCard(config, data) {
   const updated   = relativeDate(updatedAt);
   const hasLive   = !!config.liveUrl;
 
-  // Cards with a live URL use a <div> so both footer links work independently.
-  // Plain repo cards make the entire card clickable to GitHub.
   const card = document.createElement(hasLive ? 'div' : 'a');
   card.className = 'project-card reveal';
   if (!hasLive) {
@@ -309,7 +303,7 @@ function buildCard(config, data) {
   return card;
 }
 
-/* ── Render projects ────────────────────────────────────────── */
+/* ── Render projects ─────────────────────────────────────────────────────────── */
 function observeCard(card) {
   setTimeout(() => {
     const observer = new IntersectionObserver(
