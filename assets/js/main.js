@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────────
-   CyBird Security — main.js
+   CyBird Security - main.js
    ───────────────────────────────────────────────────────────── */
 
 'use strict';
@@ -48,37 +48,6 @@ const SECURITY_REPOS = [
   },
 ];
 
-const PERSONAL_REPOS = [
-  {
-    owner:   'CyBirdSecurity',
-    repo:    'CISSP',
-    badge:   'Study Tool',
-    liveUrl: 'https://cissp.cybirdsecurity.com',
-    fallback: {
-      name:        'CISSP Study Tool',
-      description: 'Interactive CISSP exam prep with 96 practice questions and 120 flashcards across all 8 exam domains. Built with React/Next.js, featuring real-time feedback, progress tracking, and a dark-themed distraction-free interface.',
-      language:    'TypeScript',
-      stars:       0,
-      forks:       0,
-      updatedAt:   null,
-    },
-  },
-  {
-    owner:   'CyBirdSecurity',
-    repo:    'SecurityPlus',
-    badge:   'Study Tool',
-    liveUrl: 'https://securityplus.cybirdsecurity.com',
-    fallback: {
-      name:        'SecurityPlus Study Tool',
-      description: 'Interactive CompTIA Security+ exam prep and study guide. Covers all exam domains with practice questions and study materials to help security professionals earn their certification.',
-      language:    'JavaScript',
-      stars:       0,
-      forks:       0,
-      updatedAt:   null,
-    },
-  },
-];
-
 /* Language → dot color mapping */
 const LANG_COLORS = {
   Python:     '#3572A5',
@@ -99,12 +68,17 @@ const LANG_COLORS = {
   if (!el) return;
 
   const words = [
-    'secure systems',
-    'resilient teams',
-    'supply chains',
-    'compliance programs',
-    'security tooling',
+    'comprehensive programs.',
+    'compliance-ready teams.',
+    'resilient architecture.',
+    'programs that scale.',
   ];
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) {
+    el.textContent = words[0];
+    return;
+  }
 
   let wordIdx  = 0;
   let charIdx  = 0;
@@ -344,10 +318,7 @@ async function renderRepoGroup(repos, gridId) {
 }
 
 async function renderProjects() {
-  await Promise.all([
-    renderRepoGroup(SECURITY_REPOS,  'projectsGrid'),
-    renderRepoGroup(PERSONAL_REPOS,  'personalProjectsGrid'),
-  ]);
+  await renderRepoGroup(SECURITY_REPOS, 'projectsGrid');
 }
 
 renderProjects();
