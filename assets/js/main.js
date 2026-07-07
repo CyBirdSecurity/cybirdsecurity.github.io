@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────────
-   CyBird Security — main.js
+   CyBird Security - main.js
    ───────────────────────────────────────────────────────────── */
 
 'use strict';
@@ -48,15 +48,15 @@ const SECURITY_REPOS = [
   },
 ];
 
-const PERSONAL_REPOS = [
+const FREE_RESOURCES = [
   {
     owner:   'CyBirdSecurity',
     repo:    'CISSP',
-    badge:   'Study Tool',
+    badge:   'Free Resource',
     liveUrl: 'https://cissp.cybirdsecurity.com',
     fallback: {
-      name:        'CISSP Study Tool',
-      description: 'Interactive CISSP exam prep with 96 practice questions and 120 flashcards across all 8 exam domains. Built with React/Next.js, featuring real-time feedback, progress tracking, and a dark-themed distraction-free interface.',
+      name:        'CISSP Exam Prep',
+      description: 'Interactive CISSP exam prep with practice questions and flashcards across all 8 exam domains, with instant feedback and progress tracking.',
       language:    'TypeScript',
       stars:       0,
       forks:       0,
@@ -66,11 +66,11 @@ const PERSONAL_REPOS = [
   {
     owner:   'CyBirdSecurity',
     repo:    'SecurityPlus',
-    badge:   'Study Tool',
+    badge:   'Free Resource',
     liveUrl: 'https://securityplus.cybirdsecurity.com',
     fallback: {
-      name:        'SecurityPlus Study Tool',
-      description: 'Interactive CompTIA Security+ exam prep and study guide. Covers all exam domains with practice questions and study materials to help security professionals earn their certification.',
+      name:        'Security+ Study Guide',
+      description: 'Interactive CompTIA Security+ exam prep and study guide, covering practice questions and study material for every exam objective.',
       language:    'JavaScript',
       stars:       0,
       forks:       0,
@@ -92,52 +92,6 @@ const LANG_COLORS = {
   'C++':      '#f34b7d',
   C:          '#555555',
 };
-
-/* ── Typing animation ───────────────────────────────────────── */
-(function initTyping() {
-  const el = document.getElementById('typedWord');
-  if (!el) return;
-
-  const words = [
-    'secure systems',
-    'resilient teams',
-    'supply chains',
-    'compliance programs',
-    'security tooling',
-  ];
-
-  let wordIdx  = 0;
-  let charIdx  = 0;
-  let deleting = false;
-  let pauseMs  = 0;
-
-  function tick() {
-    const current = words[wordIdx];
-
-    if (deleting) {
-      charIdx--;
-      el.textContent = current.slice(0, charIdx);
-      if (charIdx === 0) {
-        deleting = false;
-        wordIdx  = (wordIdx + 1) % words.length;
-        pauseMs  = 400;
-      }
-    } else {
-      charIdx++;
-      el.textContent = current.slice(0, charIdx);
-      if (charIdx === current.length) {
-        deleting = true;
-        pauseMs  = 1800;
-      }
-    }
-
-    const speed = deleting ? 45 : 85;
-    setTimeout(tick, pauseMs || speed);
-    pauseMs = 0;
-  }
-
-  setTimeout(tick, 900);
-})();
 
 /* ── Navbar scroll behaviour ────────────────────────────────── */
 (function initNavbar() {
@@ -346,7 +300,7 @@ async function renderRepoGroup(repos, gridId) {
 async function renderProjects() {
   await Promise.all([
     renderRepoGroup(SECURITY_REPOS,  'projectsGrid'),
-    renderRepoGroup(PERSONAL_REPOS,  'personalProjectsGrid'),
+    renderRepoGroup(FREE_RESOURCES,  'resourcesGrid'),
   ]);
 }
 
