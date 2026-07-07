@@ -844,73 +844,6 @@ strong { font-weight: 600; color: var(--c-text); }
   color: var(--c-purple-lt);
 }
 
-/* ── Free resources ─────────────────────────────────────────── */
-.resources-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-}
-
-.resource-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  background: var(--c-bg-card);
-  border: 1px solid var(--c-border);
-  border-top-width: 3px;
-  border-radius: var(--radius);
-  padding: 32px;
-  text-decoration: none;
-  color: inherit;
-  transition: border-color var(--t-base), background var(--t-base), transform var(--t-slow) var(--ease), box-shadow var(--t-slow) var(--ease);
-}
-.resource-card:hover {
-  background: var(--c-bg-card-hov);
-  transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-}
-.resource-card--purple { border-top-color: var(--c-purple); }
-.resource-card--purple:hover { border-color: rgba(124, 58, 237, 0.4); }
-.resource-card--cyan { border-top-color: var(--c-cyan); }
-.resource-card--cyan:hover { border-color: rgba(6, 182, 212, 0.4); }
-
-.resource-badge {
-  align-self: flex-start;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--c-green);
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  border-radius: var(--radius-pill);
-  padding: 3px 10px;
-}
-
-.resource-card-title {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.resource-card-text {
-  font-size: 14px;
-  color: var(--c-text-2);
-  line-height: 1.65;
-  flex: 1;
-}
-
-.resource-card-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--c-purple-lt);
-}
-
 /* ── Contact ────────────────────────────────────────────────── */
 .contact {
   position: relative;
@@ -956,7 +889,7 @@ strong { font-weight: 600; color: var(--c-text); }
 
 .contact-links {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
 }
 
@@ -1083,7 +1016,6 @@ strong { font-weight: 600; color: var(--c-text); }
   .service-card--featured .service-card-text,
   .service-card--featured .service-card-tags { grid-column: 1; }
   .approach-steps { grid-template-columns: repeat(2, 1fr); }
-  .resources-grid { grid-template-columns: 1fr; }
   .skills-grid { grid-template-columns: 1fr; }
 }
 
@@ -1137,7 +1069,6 @@ strong { font-weight: 600; color: var(--c-text); }
 @media (max-width: 480px) {
   .hero-eyebrow { font-size: 10px; }
   .hero-title { font-size: 23px; }
-  .contact-links { grid-template-columns: 1fr; }
 }
 
 /* ── Reduced motion ─────────────────────────────────────────── */

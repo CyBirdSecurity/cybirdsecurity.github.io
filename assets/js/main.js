@@ -48,6 +48,37 @@ const SECURITY_REPOS = [
   },
 ];
 
+const FREE_RESOURCES = [
+  {
+    owner:   'CyBirdSecurity',
+    repo:    'CISSP',
+    badge:   'Free Resource',
+    liveUrl: 'https://cissp.cybirdsecurity.com',
+    fallback: {
+      name:        'CISSP Exam Prep',
+      description: 'Interactive CISSP exam prep with practice questions and flashcards across all 8 exam domains, with instant feedback and progress tracking.',
+      language:    'TypeScript',
+      stars:       0,
+      forks:       0,
+      updatedAt:   null,
+    },
+  },
+  {
+    owner:   'CyBirdSecurity',
+    repo:    'SecurityPlus',
+    badge:   'Free Resource',
+    liveUrl: 'https://securityplus.cybirdsecurity.com',
+    fallback: {
+      name:        'Security+ Study Guide',
+      description: 'Interactive CompTIA Security+ exam prep and study guide, covering practice questions and study material for every exam objective.',
+      language:    'JavaScript',
+      stars:       0,
+      forks:       0,
+      updatedAt:   null,
+    },
+  },
+];
+
 /* Language → dot color mapping */
 const LANG_COLORS = {
   Python:     '#3572A5',
@@ -267,7 +298,10 @@ async function renderRepoGroup(repos, gridId) {
 }
 
 async function renderProjects() {
-  await renderRepoGroup(SECURITY_REPOS, 'projectsGrid');
+  await Promise.all([
+    renderRepoGroup(SECURITY_REPOS,  'projectsGrid'),
+    renderRepoGroup(FREE_RESOURCES,  'resourcesGrid'),
+  ]);
 }
 
 renderProjects();
